@@ -24,6 +24,8 @@ python -m pytest -q
 - 分支 `feat/knitalign-research-baseline` 创建成功。
 - 第一版测试：**70 passed in 3.88s**（Python 3.12，numpy 2.5.5，
   opencv-python-headless 5.1.0.95，streamlit 1.67.0，pytest 9.2.0）。
+- 本轮在仓库内新建 `.venv` 并按 `requirements.txt` 安装成功（同一组版本）；
+  安装后全套测试为 **81 passed in 9.95s**，是下文最终测试结果的来源。
 - 访问私有仓库使用本机已登录的 GitHub 账号 `demonpepper45-a11y`（owner），
   未发生权限阻塞。HTTPS 克隆需显式提供令牌/OpenSSL 后端；命令中未写入任何令牌。
 
@@ -145,7 +147,7 @@ CLI 的 manifest 模式已用合成样例走通（`tests/test_cli.py` 中的 `S1
 
 ## 5. 测试与证据汇总
 
-最终测试：**81 passed in 8.28s**（完整输出 `docs/pytest_output.txt`）。
+最终测试：**81 passed in 9.95s**（新建 `.venv` 安装依赖后运行；完整输出 `docs/pytest_output.txt`）。
 
 | 测试文件 | 数量 | 本轮新增内容 |
 |---|---:|---|
