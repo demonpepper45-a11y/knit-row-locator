@@ -1,0 +1,5 @@
+numpy>=1.26
+opencv-python-headless>=4.9
+streamlit>=1.32
+pytest>=8.0
+Pillow>=10.0

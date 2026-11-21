@@ -1,0 +1,41 @@
+{
+  "material": "synthetic",
+  "description": "第 19–23 行唯一；整体换色后仍无其他等价窗口。",
+  "status": "unique",
+  "windows_1based": [
+    [
+      19,
+      23
+    ]
+  ],
+  "last_completed_rows": [
+    23
+  ],
+  "next_rows": [
+    24
+  ],
+  "min_best_score": 0.99,
+  "max_diff_cells": 0,
+  "scenarios": [
+    {
+      "name": "限定最近完成行 20–26",
+      "row_range": [
+        20,
+        26
+      ],
+      "status": "unique",
+      "windows_1based": [
+        [
+          19,
+          23
+        ]
+      ],
+      "last_completed_rows": [
+        23
+      ],
+      "next_rows": [
+        24
+      ]
+    }
+  ]
+}

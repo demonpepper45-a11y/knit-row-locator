@@ -1,0 +1,59 @@
+{
+  "material": "synthetic",
+  "description": "每 8 行重复一次；观测可在第 8、16、24、32 行结束。",
+  "status": "multiple",
+  "windows_1based": [
+    [
+      4,
+      8
+    ],
+    [
+      12,
+      16
+    ],
+    [
+      20,
+      24
+    ],
+    [
+      28,
+      32
+    ]
+  ],
+  "last_completed_rows": [
+    8,
+    16,
+    24,
+    32
+  ],
+  "next_rows": [
+    9,
+    17,
+    25,
+    33
+  ],
+  "min_best_score": 0.99,
+  "max_diff_cells": 0,
+  "scenarios": [
+    {
+      "name": "限定最近完成行 20–26",
+      "row_range": [
+        20,
+        26
+      ],
+      "status": "unique",
+      "windows_1based": [
+        [
+          20,
+          24
+        ]
+      ],
+      "last_completed_rows": [
+        24
+      ],
+      "next_rows": [
+        25
+      ]
+    }
+  ]
+}

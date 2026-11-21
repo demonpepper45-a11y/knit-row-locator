@@ -1,0 +1,58 @@
+{
+  "id": "case1_unique",
+  "name": "演示一：唯一位置（第 19–23 行）",
+  "summary": "5 行可见配色在图解中只出现一次；即使整体交换两种颜色，也没有其他等价窗口。",
+  "seed": 20261121,
+  "material": "程序生成的合成图像（非实拍）",
+  "palette_bgr": [
+    [
+      74,
+      104,
+      78
+    ],
+    [
+      235,
+      232,
+      222
+    ]
+  ],
+  "chart": {
+    "file": "chart.png",
+    "rows": 32,
+    "stitches": 12,
+    "rect": [
+      26.0,
+      26.0,
+      338.0,
+      858.0
+    ]
+  },
+  "photo": {
+    "file": "photo.png",
+    "rows": 5,
+    "stitches": 12,
+    "corners": [
+      [
+        52.134,
+        161.188
+      ],
+      [
+        590.652,
+        154.37
+      ],
+      [
+        594.485,
+        378.944
+      ],
+      [
+        50.443,
+        384.373
+      ]
+    ],
+    "true_last_completed_row": 23
+  },
+  "variants": {
+    "blurred": "photo_blurred.png",
+    "low_contrast": "photo_lowcontrast.png"
+  }
+}
