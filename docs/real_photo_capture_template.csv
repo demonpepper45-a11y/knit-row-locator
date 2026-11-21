@@ -1,0 +1,4 @@
+﻿sample_id,group_id,chart_file,chart_sha256,chart_rows,chart_stitches,photo_file,photo_sha256,photo_rows,photo_stitches,actual_last_completed_row,truth_source,visible_rows,corners_tl_x,corners_tl_y,corners_tr_x,corners_tr_y,corners_br_x,corners_br_y,corners_bl_x,corners_bl_y,capture_date,device,lighting,deformation,occlusion,operator,row_range,system_status,candidate_last_completed_rows,next_rows,best_score,coverage,diff_cells,reselected_corners,outcome,notes
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,

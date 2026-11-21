@@ -6,3 +6,7 @@ __pycache__/
 .streamlit/secrets.toml
 .DS_Store
 Thumbs.db
+
+# 真实织片素材与逐样本输出默认不提交，避免泄露未授权内容
+data/real_round1/
+reports/real_round1/

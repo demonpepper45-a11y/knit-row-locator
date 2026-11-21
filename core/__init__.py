@@ -11,6 +11,7 @@ from .config import (
 )
 from .match import match
 from .photo import PhotoReadResult, read_photo
+from .progress import CandidateProgress, candidate_progress
 from .types import (
     STATUS_HELP,
     STATUS_INPUT_ERROR,
@@ -25,13 +26,15 @@ from .types import (
     ObservedGrid,
 )
 
-__version__ = "0.1.0"
+__version__ = "0.2.0"
 
 __all__ = [
     "Candidate",
+    "CandidateProgress",
     "ChartConfig",
     "ChartGrid",
     "ChartReadResult",
+    "candidate_progress",
     "DEFAULT_CHART_CONFIG",
     "DEFAULT_MATCH_CONFIG",
     "DEFAULT_PHOTO_CONFIG",

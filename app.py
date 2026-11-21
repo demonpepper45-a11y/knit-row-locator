@@ -14,6 +14,7 @@
 from __future__ import annotations
 
 import hashlib
+import os
 from pathlib import Path
 
 import cv2
@@ -25,6 +26,7 @@ from core.draw import draw_texts
 from core.imageio import ImageInputError, decode_image_bytes, encode_png, load_image, to_rgb
 from core.photo import read_photo
 from core.pipeline import LocateResult, list_cases, load_case, locate, run_case
+from core.progress import candidate_progress
 from core.render import render_chart
 from core.types import (
     STATUS_HELP,
@@ -36,7 +38,7 @@ from core.types import (
 )
 
 ROOT = Path(__file__).resolve().parent
-EXAMPLES = ROOT / "examples"
+EXAMPLES = Path(os.environ.get("KNITALIGN_EXAMPLES_DIR", ROOT / "examples")).resolve()
 
 st.set_page_config(
     page_title="织到哪一行了？",
@@ -159,9 +161,15 @@ def _expected_text(spec) -> str:
     expected = spec.expected
     if expected["status"] == STATUS_UNIQUE:
         first, last = expected["windows_1based"][0]
+        last_completed = expected["last_completed_rows"][0]
+        if last_completed >= spec.chart_rows:
+            return (
+                f"演示预期：唯一候选，图解第 {first}–{last} 行；"
+                f"最近完成第 {last_completed} 行，图解已完成。"
+            )
         return (
             f"演示预期：唯一候选，图解第 {first}–{last} 行；"
-            f"最近完成第 {expected['last_completed_rows'][0]} 行，下一行第 {expected['next_rows'][0]} 行。"
+            f"最近完成第 {last_completed} 行，下一行第 {expected['next_rows'][0]} 行。"
         )
     if expected["status"] == STATUS_MULTIPLE:
         windows = "、".join(f"第 {a}–{b} 行" for a, b in expected["windows_1based"])
@@ -259,12 +267,10 @@ def _show_result(
         candidate = candidates[labels.index(chosen)]
         st.caption("下面显示的是当前所选候选的高亮；所有候选都保存在结果里。")
 
+    progress = candidate_progress(match_result, candidate)
     metrics = st.columns(4)
     metrics[0].metric("最近完成行", candidate.last_completed_row)
-    metrics[1].metric(
-        "下一行",
-        "图解已完成" if match_result.chart_complete else candidate.next_row,
-    )
+    metrics[1].metric("下一行", progress.next_label)
     metrics[2].metric("加权吻合度", f"{candidate.score:.1%}")
     metrics[3].metric("有效覆盖率", f"{match_result.coverage:.0%}")
 
@@ -273,8 +279,8 @@ def _show_result(
             "**这些位置的可见配色相同或接近**，仅凭当前照片无法判断真实进度。"
             "可补拍包含更早行的照片、增加可见行数，或在上方限定最近完成行范围。"
         )
-    if match_result.chart_complete:
-        st.info("**图解已完成**：观测窗口覆盖到图解最后一行，没有下一行。")
+    if progress.is_last_window:
+        st.info(f"**{progress.next_label}**：{progress.note}")
     if candidate.swapped:
         st.caption("照片与图解的两种颜色整体互换；匹配时已自动尝试颜色映射，行号不受影响。")
 
@@ -290,7 +296,10 @@ def _show_result(
     with right:
         st.image(
             to_rgb(chart_render),
-            caption="图解高亮：黄色窗口＝候选行；橙线＝最近完成行；绿线＝下一行",
+            caption=(
+                "图解高亮：黄色窗口＝候选行；橙线＝最近完成行"
+                + ("；已到末行，无下一行" if progress.is_last_window else "；绿线＝下一行")
+            ),
         )
 
     _show_diff_cells(result, candidate)
@@ -322,8 +331,9 @@ def _show_result(
         thresholds = match_result.thresholds
         st.markdown(
             f"""
-- **加权吻合度**：颜色一致的格子权重之和 ÷ 有效格子权重之和（0–100%）。干净合成图接近 100%，
-  正常实拍常在 85%–97%。低于 {thresholds.get('min_score', 0.82):.0%} 时不会给出候选。
+- **加权吻合度**：颜色一致的格子权重之和 ÷ 有效格子权重之和（0–100%）。
+  干净合成样例接近 100%；实拍吻合度尚无配对实测数据，当前阈值是待实拍校准的初始值。
+  低于 {thresholds.get('min_score', 0.82):.0%} 时不会给出候选。
 - **有效覆盖率**：权重达到阈值的格子占比；低于 {thresholds.get('min_coverage', 0.60):.0%} 视为证据不足。
 - **唯一 / 多个候选**：最佳候选与次佳候选的分差 ≤ {thresholds.get('ambiguity_margin', 0.02):.0%} 时，
   视为“相同或接近”，全部保留。
