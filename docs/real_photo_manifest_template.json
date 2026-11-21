@@ -1,0 +1,27 @@
+{
+  "_template_note": "复制到 data/real_round1/manifest.json 后填写；路径相对于 manifest 所在目录；row_range 可省略或写 [20,26]。",
+  "schema_version": "knitalign.samples.v1",
+  "samples": [
+    {
+      "sample_id": "R001",
+      "group_id": "chart_A",
+      "material": "real",
+      "chart": "charts/chart_A/original.png",
+      "chart_rows": 0,
+      "chart_stitches": 0,
+      "chart_rect": [0, 0, 0, 0],
+      "photo": "photos/piece_A1/session_20261121_01/frame_0001.jpg",
+      "photo_rows": 0,
+      "photo_stitches": 0,
+      "photo_corners": [
+        [0, 0],
+        [0, 0],
+        [0, 0],
+        [0, 0]
+      ],
+      "true_last_completed_row": 0,
+      "row_range": null,
+      "notes": "填写独立记录的停织行号、拍摄条件和是否需要重选角点。"
+    }
+  ]
+}

@@ -63,6 +63,23 @@ def test_demo2_multiple_candidates_switch_and_range() -> None:
     assert metrics["最近完成行"] == "24"
     assert metrics["下一行"] == "25"
 
+    # 切到第 28–32 行：不能显示不存在的“下一行 33”，且要保留多候选歧义
+    app.selectbox[0].select(options[3]).run()
+    _assert_clean(app)
+    metrics = {metric.label: metric.value for metric in app.metric}
+    assert metrics["最近完成行"] == "32"
+    assert metrics["下一行"] == "若此候选正确，图解已完成"
+    assert "33" not in metrics["下一行"]
+    assert any("若此候选正确，图解已完成" in item.value for item in app.info)
+    assert not any("下一行：第 33 行" in item.value for item in app.caption)
+
+    # 切回第 20–24 行：下一行应恢复为 25
+    app.selectbox[0].select(options[2]).run()
+    _assert_clean(app)
+    metrics = {metric.label: metric.value for metric in app.metric}
+    assert metrics["最近完成行"] == "24"
+    assert metrics["下一行"] == "25"
+
     app.get_by_key("demo_range_enabled").check().run()
     _assert_clean(app)
     app.get_by_key("demo_lo").set_value(20)
@@ -92,6 +109,81 @@ def test_deep_link_opens_narrowed_demo() -> None:
     metrics = {metric.label: metric.value for metric in app.metric}
     assert metrics["最近完成行"] == "24"
     assert any("与演示预期一致" in item.value for item in app.success)
+
+
+def test_unique_last_row_shows_complete(tmp_path: Path, monkeypatch) -> None:
+    import cv2
+
+    from core.chart import read_chart
+    from core.imageio import load_image
+    from core.synth import render_photo
+
+    source = ROOT / "examples" / "case1_unique"
+    source_case = json.loads((source / "case.json").read_text(encoding="utf-8"))
+    chart = read_chart(
+        load_image(source / "chart.png"),
+        tuple(source_case["chart"]["rect"]),
+        source_case["chart"]["rows"],
+        source_case["chart"]["stitches"],
+    ).chart
+    photo = render_photo(chart, 27, 5, seed=9191)
+
+    examples = tmp_path / "examples"
+    case_dir = examples / "last_row_unique"
+    case_dir.mkdir(parents=True)
+    (case_dir / "chart.png").write_bytes((source / "chart.png").read_bytes())
+    ok, buffer = cv2.imencode(".png", photo.image)
+    assert ok
+    (case_dir / "photo.png").write_bytes(buffer.tobytes())
+    case = {
+        "id": "last_row_unique",
+        "name": "末行唯一候选",
+        "summary": "唯一候选覆盖第 28–32 行，用于验证末行显示。",
+        "seed": 9191,
+        "material": "程序生成的合成图像（非实拍）",
+        "chart": {
+            "file": "chart.png",
+            "rows": source_case["chart"]["rows"],
+            "stitches": source_case["chart"]["stitches"],
+            "rect": source_case["chart"]["rect"],
+        },
+        "photo": {
+            "file": "photo.png",
+            "rows": 5,
+            "stitches": source_case["chart"]["stitches"],
+            "corners": [[round(float(x), 3), round(float(y), 3)] for x, y in photo.corners],
+            "true_last_completed_row": 32,
+        },
+        "variants": {},
+    }
+    expected = {
+        "material": "synthetic",
+        "description": "唯一候选到图解最后一行。",
+        "status": "unique",
+        "windows_1based": [[28, 32]],
+        "last_completed_rows": [32],
+        "next_rows": [],
+        "min_best_score": 0.99,
+        "max_diff_cells": 0,
+        "scenarios": [],
+    }
+    (case_dir / "case.json").write_text(json.dumps(case, ensure_ascii=False), encoding="utf-8")
+    (case_dir / "expected.json").write_text(json.dumps(expected, ensure_ascii=False), encoding="utf-8")
+
+    monkeypatch.setenv("KNITALIGN_EXAMPLES_DIR", str(examples))
+    app = AppTest.from_file(str(ROOT / "app.py"), default_timeout=120)
+    app.query_params["case"] = "last_row_unique"
+    app.run()
+    _assert_clean(app)
+    result = app.session_state["result"]
+    assert result.result.status == "unique"
+    assert [c.window_1based for c in result.result.candidates] == [(28, 32)]
+    metrics = {metric.label: metric.value for metric in app.metric}
+    assert metrics["最近完成行"] == "32"
+    assert metrics["下一行"] == "图解已完成"
+    assert any("图解已完成" in item.value for item in app.info)
+    assert any("与演示预期一致" in item.value for item in app.success)
+    assert any("已知停织行：第 32 行" in item.value for item in app.caption)
 
 
 def _upload_case1(app: AppTest, examples: Path) -> tuple[str, str]:

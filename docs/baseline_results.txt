@@ -1,0 +1,32 @@
+﻿KnitAlign baseline v0.2.0（schema knitalign.baseline.v1）
+模式：builtin
+阈值：min_coverage=0.60 min_score=0.82 ambiguity_margin=0.02
+row_range: full
+
+[case1_unique]
+  来源: examples/case1_unique/chart.png + examples/case1_unique/photo.png（程序生成的合成图像（非实拍），seed=20261121）
+  状态: unique（唯一候选）  候选数=1  有效覆盖率=100.00%  耗时=82.6 ms
+  - 第 19–23 行 | 最近完成 23 | 下一行 24 | 吻合度 1.000 | 有效覆盖 100% | 差异格 0
+  预期核对: OK  期望 unique [[19, 23]]  实际 unique [[19, 23]]
+
+[case1_unique] scenario=限定最近完成行 20–26
+  来源: examples/case1_unique/chart.png + examples/case1_unique/photo.png（程序生成的合成图像（非实拍），seed=20261121）
+  状态: unique（唯一候选）  候选数=1  有效覆盖率=100.00%  耗时=41.3 ms
+  - 第 19–23 行 | 最近完成 23 | 下一行 24 | 吻合度 1.000 | 有效覆盖 100% | 差异格 0
+  预期核对: OK  期望 unique [[19, 23]]  实际 unique [[19, 23]]
+
+[case2_repeat]
+  来源: examples/case2_repeat/chart.png + examples/case2_repeat/photo.png（程序生成的合成图像（非实拍），seed=20261122）
+  状态: multiple（多个候选）  候选数=4  有效覆盖率=100.00%  耗时=41.0 ms
+  - 第 4–8 行 | 最近完成 8 | 下一行 9 | 吻合度 1.000 | 有效覆盖 100% | 差异格 0
+  - 第 12–16 行 | 最近完成 16 | 下一行 17 | 吻合度 1.000 | 有效覆盖 100% | 差异格 0
+  - 第 20–24 行 | 最近完成 24 | 下一行 25 | 吻合度 1.000 | 有效覆盖 100% | 差异格 0
+  - 第 28–32 行 | 最近完成 32 | 下一行 若此候选正确，图解已完成 | 吻合度 1.000 | 有效覆盖 100% | 差异格 0
+  预期核对: OK  期望 multiple [[4, 8], [12, 16], [20, 24], [28, 32]]  实际 multiple [[4, 8], [12, 16], [20, 24], [28, 32]]
+  说明: 按候选集比较，未把并列候选当成唯一真值。
+
+[case2_repeat] scenario=限定最近完成行 20–26
+  来源: examples/case2_repeat/chart.png + examples/case2_repeat/photo.png（程序生成的合成图像（非实拍），seed=20261122）
+  状态: unique（唯一候选）  候选数=1  有效覆盖率=100.00%  耗时=40.9 ms
+  - 第 20–24 行 | 最近完成 24 | 下一行 25 | 吻合度 1.000 | 有效覆盖 100% | 差异格 0
+  预期核对: OK  期望 unique [[20, 24]]  实际 unique [[20, 24]]

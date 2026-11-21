@@ -1,0 +1,648 @@
+{
+  "schema_version": "knitalign.baseline.v1",
+  "mode": "builtin",
+  "manifest": null,
+  "tool": {
+    "name": "knitalign-cli",
+    "version": "0.2.0"
+  },
+  "environment": {
+    "python": "3.12.0rc3",
+    "numpy": "2.5.5",
+    "opencv": "5.1.0",
+    "platform": "Windows-11-10.0.26200-SP0"
+  },
+  "config": {
+    "match": {
+      "min_coverage": 0.6,
+      "min_score": 0.82,
+      "ambiguity_margin": 0.02,
+      "min_cell_weight": 0.15,
+      "low_weight": 0.35
+    },
+    "chart": {
+      "sample_inner": 0.5,
+      "min_cell_px": 2.0,
+      "min_color_separation": 8.0
+    },
+    "photo": {
+      "cell_px": 48.0,
+      "sample_grid": 5.0,
+      "min_source_cell_px": 3.0,
+      "color_separation_min": 8.0,
+      "color_separation_clear": 45.0,
+      "blur_warn": 30.0,
+      "low_purity": 0.55
+    }
+  },
+  "row_range": null,
+  "case_count": 4,
+  "cases": [
+    {
+      "case_id": "case1_unique",
+      "case_dir": "examples/case1_unique",
+      "name": "演示一：唯一位置（第 19–23 行）",
+      "material": "程序生成的合成图像（非实拍）",
+      "source": {
+        "chart": "examples/case1_unique/chart.png",
+        "photo": "examples/case1_unique/photo.png",
+        "seed": 20261121
+      },
+      "ground_truth_last_completed_row": 23,
+      "inputs": {
+        "chart_rows": 32,
+        "chart_stitches": 12,
+        "chart_rect": [
+          26.0,
+          26.0,
+          338.0,
+          858.0
+        ],
+        "photo_rows": 5,
+        "photo_stitches": 12,
+        "photo_corners": [
+          [
+            52.134,
+            161.188
+          ],
+          [
+            590.652,
+            154.37
+          ],
+          [
+            594.485,
+            378.944
+          ],
+          [
+            50.443,
+            384.373
+          ]
+        ]
+      },
+      "scenario_name": null,
+      "row_range": null,
+      "expected": {
+        "material": "synthetic",
+        "description": "第 19–23 行唯一；整体换色后仍无其他等价窗口。",
+        "status": "unique",
+        "windows_1based": [
+          [
+            19,
+            23
+          ]
+        ],
+        "last_completed_rows": [
+          23
+        ],
+        "next_rows": [
+          24
+        ],
+        "min_best_score": 0.99,
+        "max_diff_cells": 0,
+        "scenarios": [
+          {
+            "name": "限定最近完成行 20–26",
+            "row_range": [
+              20,
+              26
+            ],
+            "status": "unique",
+            "windows_1based": [
+              [
+                19,
+                23
+              ]
+            ],
+            "last_completed_rows": [
+              23
+            ],
+            "next_rows": [
+              24
+            ]
+          }
+        ]
+      },
+      "expected_check": {
+        "matches": true,
+        "comparison": "single_window",
+        "expected_status": "unique",
+        "actual_status": "unique",
+        "expected_windows_1based": [
+          [
+            19,
+            23
+          ]
+        ],
+        "actual_windows_1based": [
+          [
+            19,
+            23
+          ]
+        ],
+        "note": "按单个候选窗口比较。"
+      },
+      "result": {
+        "status": "unique",
+        "status_label": "唯一候选",
+        "reason": "图解第 19–23 行，最近完成第 23 行，下一行第 24 行。加权吻合度 100.0%，有效覆盖率 100%。",
+        "coverage": 1.0,
+        "candidate_count": 1,
+        "windows_searched": 28,
+        "candidates": [
+          {
+            "window_1based": [
+              19,
+              23
+            ],
+            "start_row_zero_based": 18,
+            "height": 5,
+            "last_completed_row": 23,
+            "next_row": 24,
+            "next_label": "24",
+            "is_last_window": false,
+            "score": 1.0,
+            "coverage": 1.0,
+            "color_mapping": "direct",
+            "matches": 60,
+            "valid_cells": 60,
+            "diff_count": 0,
+            "diff_cells": [],
+            "diff_cells_truncated": false
+          }
+        ]
+      },
+      "elapsed_ms": 87.5
+    },
+    {
+      "case_id": "case1_unique",
+      "case_dir": "examples/case1_unique",
+      "name": "演示一：唯一位置（第 19–23 行）",
+      "material": "程序生成的合成图像（非实拍）",
+      "source": {
+        "chart": "examples/case1_unique/chart.png",
+        "photo": "examples/case1_unique/photo.png",
+        "seed": 20261121
+      },
+      "ground_truth_last_completed_row": 23,
+      "inputs": {
+        "chart_rows": 32,
+        "chart_stitches": 12,
+        "chart_rect": [
+          26.0,
+          26.0,
+          338.0,
+          858.0
+        ],
+        "photo_rows": 5,
+        "photo_stitches": 12,
+        "photo_corners": [
+          [
+            52.134,
+            161.188
+          ],
+          [
+            590.652,
+            154.37
+          ],
+          [
+            594.485,
+            378.944
+          ],
+          [
+            50.443,
+            384.373
+          ]
+        ]
+      },
+      "scenario_name": "限定最近完成行 20–26",
+      "row_range": [
+        20,
+        26
+      ],
+      "expected": {
+        "name": "限定最近完成行 20–26",
+        "row_range": [
+          20,
+          26
+        ],
+        "status": "unique",
+        "windows_1based": [
+          [
+            19,
+            23
+          ]
+        ],
+        "last_completed_rows": [
+          23
+        ],
+        "next_rows": [
+          24
+        ]
+      },
+      "expected_check": {
+        "matches": true,
+        "comparison": "single_window",
+        "expected_status": "unique",
+        "actual_status": "unique",
+        "expected_windows_1based": [
+          [
+            19,
+            23
+          ]
+        ],
+        "actual_windows_1based": [
+          [
+            19,
+            23
+          ]
+        ],
+        "note": "按单个候选窗口比较。"
+      },
+      "result": {
+        "status": "unique",
+        "status_label": "唯一候选",
+        "reason": "图解第 19–23 行，最近完成第 23 行，下一行第 24 行。加权吻合度 100.0%，有效覆盖率 100%。",
+        "coverage": 1.0,
+        "candidate_count": 1,
+        "windows_searched": 7,
+        "candidates": [
+          {
+            "window_1based": [
+              19,
+              23
+            ],
+            "start_row_zero_based": 18,
+            "height": 5,
+            "last_completed_row": 23,
+            "next_row": 24,
+            "next_label": "24",
+            "is_last_window": false,
+            "score": 1.0,
+            "coverage": 1.0,
+            "color_mapping": "direct",
+            "matches": 60,
+            "valid_cells": 60,
+            "diff_count": 0,
+            "diff_cells": [],
+            "diff_cells_truncated": false
+          }
+        ]
+      },
+      "elapsed_ms": 41.3
+    },
+    {
+      "case_id": "case2_repeat",
+      "case_dir": "examples/case2_repeat",
+      "name": "演示二：重复花纹（每 8 行重复）",
+      "material": "程序生成的合成图像（非实拍）",
+      "source": {
+        "chart": "examples/case2_repeat/chart.png",
+        "photo": "examples/case2_repeat/photo.png",
+        "seed": 20261122
+      },
+      "ground_truth_last_completed_row": 24,
+      "inputs": {
+        "chart_rows": 32,
+        "chart_stitches": 12,
+        "chart_rect": [
+          26.0,
+          26.0,
+          338.0,
+          858.0
+        ],
+        "photo_rows": 5,
+        "photo_stitches": 12,
+        "photo_corners": [
+          [
+            52.134,
+            161.188
+          ],
+          [
+            590.652,
+            154.37
+          ],
+          [
+            594.485,
+            378.944
+          ],
+          [
+            50.443,
+            384.373
+          ]
+        ]
+      },
+      "scenario_name": null,
+      "row_range": null,
+      "expected": {
+        "material": "synthetic",
+        "description": "每 8 行重复一次；观测可在第 8、16、24、32 行结束。",
+        "status": "multiple",
+        "windows_1based": [
+          [
+            4,
+            8
+          ],
+          [
+            12,
+            16
+          ],
+          [
+            20,
+            24
+          ],
+          [
+            28,
+            32
+          ]
+        ],
+        "last_completed_rows": [
+          8,
+          16,
+          24,
+          32
+        ],
+        "next_rows": [
+          9,
+          17,
+          25,
+          33
+        ],
+        "min_best_score": 0.99,
+        "max_diff_cells": 0,
+        "scenarios": [
+          {
+            "name": "限定最近完成行 20–26",
+            "row_range": [
+              20,
+              26
+            ],
+            "status": "unique",
+            "windows_1based": [
+              [
+                20,
+                24
+              ]
+            ],
+            "last_completed_rows": [
+              24
+            ],
+            "next_rows": [
+              25
+            ]
+          }
+        ]
+      },
+      "expected_check": {
+        "matches": true,
+        "comparison": "candidate_set",
+        "expected_status": "multiple",
+        "actual_status": "multiple",
+        "expected_windows_1based": [
+          [
+            4,
+            8
+          ],
+          [
+            12,
+            16
+          ],
+          [
+            20,
+            24
+          ],
+          [
+            28,
+            32
+          ]
+        ],
+        "actual_windows_1based": [
+          [
+            4,
+            8
+          ],
+          [
+            12,
+            16
+          ],
+          [
+            20,
+            24
+          ],
+          [
+            28,
+            32
+          ]
+        ],
+        "note": "按候选集比较；并列候选均可解释同一张照片，不把任一个当成唯一真值。"
+      },
+      "result": {
+        "status": "multiple",
+        "status_label": "多个候选",
+        "reason": "有 4 个位置的可见配色相同或接近：第 4–8 行（最近完成 8）、第 12–16 行（最近完成 16）、第 20–24 行（最近完成 24）、第 28–32 行（最近完成 32）。最佳吻合度 100.0%，候选分差 ≤ 2%，仅凭当前可见区域无法区分。可以补拍更早的行、增加可见行数，或在下方指定最近完成行范围。",
+        "coverage": 1.0,
+        "candidate_count": 4,
+        "windows_searched": 28,
+        "candidates": [
+          {
+            "window_1based": [
+              4,
+              8
+            ],
+            "start_row_zero_based": 3,
+            "height": 5,
+            "last_completed_row": 8,
+            "next_row": 9,
+            "next_label": "9",
+            "is_last_window": false,
+            "score": 1.0,
+            "coverage": 1.0,
+            "color_mapping": "direct",
+            "matches": 60,
+            "valid_cells": 60,
+            "diff_count": 0,
+            "diff_cells": [],
+            "diff_cells_truncated": false
+          },
+          {
+            "window_1based": [
+              12,
+              16
+            ],
+            "start_row_zero_based": 11,
+            "height": 5,
+            "last_completed_row": 16,
+            "next_row": 17,
+            "next_label": "17",
+            "is_last_window": false,
+            "score": 1.0,
+            "coverage": 1.0,
+            "color_mapping": "direct",
+            "matches": 60,
+            "valid_cells": 60,
+            "diff_count": 0,
+            "diff_cells": [],
+            "diff_cells_truncated": false
+          },
+          {
+            "window_1based": [
+              20,
+              24
+            ],
+            "start_row_zero_based": 19,
+            "height": 5,
+            "last_completed_row": 24,
+            "next_row": 25,
+            "next_label": "25",
+            "is_last_window": false,
+            "score": 1.0,
+            "coverage": 1.0,
+            "color_mapping": "direct",
+            "matches": 60,
+            "valid_cells": 60,
+            "diff_count": 0,
+            "diff_cells": [],
+            "diff_cells_truncated": false
+          },
+          {
+            "window_1based": [
+              28,
+              32
+            ],
+            "start_row_zero_based": 27,
+            "height": 5,
+            "last_completed_row": 32,
+            "next_row": null,
+            "next_label": "若此候选正确，图解已完成",
+            "is_last_window": true,
+            "score": 1.0,
+            "coverage": 1.0,
+            "color_mapping": "direct",
+            "matches": 60,
+            "valid_cells": 60,
+            "diff_count": 0,
+            "diff_cells": [],
+            "diff_cells_truncated": false
+          }
+        ]
+      },
+      "elapsed_ms": 43.0
+    },
+    {
+      "case_id": "case2_repeat",
+      "case_dir": "examples/case2_repeat",
+      "name": "演示二：重复花纹（每 8 行重复）",
+      "material": "程序生成的合成图像（非实拍）",
+      "source": {
+        "chart": "examples/case2_repeat/chart.png",
+        "photo": "examples/case2_repeat/photo.png",
+        "seed": 20261122
+      },
+      "ground_truth_last_completed_row": 24,
+      "inputs": {
+        "chart_rows": 32,
+        "chart_stitches": 12,
+        "chart_rect": [
+          26.0,
+          26.0,
+          338.0,
+          858.0
+        ],
+        "photo_rows": 5,
+        "photo_stitches": 12,
+        "photo_corners": [
+          [
+            52.134,
+            161.188
+          ],
+          [
+            590.652,
+            154.37
+          ],
+          [
+            594.485,
+            378.944
+          ],
+          [
+            50.443,
+            384.373
+          ]
+        ]
+      },
+      "scenario_name": "限定最近完成行 20–26",
+      "row_range": [
+        20,
+        26
+      ],
+      "expected": {
+        "name": "限定最近完成行 20–26",
+        "row_range": [
+          20,
+          26
+        ],
+        "status": "unique",
+        "windows_1based": [
+          [
+            20,
+            24
+          ]
+        ],
+        "last_completed_rows": [
+          24
+        ],
+        "next_rows": [
+          25
+        ]
+      },
+      "expected_check": {
+        "matches": true,
+        "comparison": "single_window",
+        "expected_status": "unique",
+        "actual_status": "unique",
+        "expected_windows_1based": [
+          [
+            20,
+            24
+          ]
+        ],
+        "actual_windows_1based": [
+          [
+            20,
+            24
+          ]
+        ],
+        "note": "按单个候选窗口比较。"
+      },
+      "result": {
+        "status": "unique",
+        "status_label": "唯一候选",
+        "reason": "图解第 20–24 行，最近完成第 24 行，下一行第 25 行。加权吻合度 100.0%，有效覆盖率 100%。",
+        "coverage": 1.0,
+        "candidate_count": 1,
+        "windows_searched": 7,
+        "candidates": [
+          {
+            "window_1based": [
+              20,
+              24
+            ],
+            "start_row_zero_based": 19,
+            "height": 5,
+            "last_completed_row": 24,
+            "next_row": 25,
+            "next_label": "25",
+            "is_last_window": false,
+            "score": 1.0,
+            "coverage": 1.0,
+            "color_mapping": "direct",
+            "matches": 60,
+            "valid_cells": 60,
+            "diff_count": 0,
+            "diff_cells": [],
+            "diff_cells_truncated": false
+          }
+        ]
+      },
+      "elapsed_ms": 41.6
+    }
+  ]
+}

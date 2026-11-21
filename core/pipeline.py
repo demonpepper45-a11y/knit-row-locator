@@ -23,6 +23,7 @@ class CaseSpec:
     name: str
     summary: str
     seed: int
+    material: str
     chart_path: Path
     chart_rows: int
     chart_cols: int
@@ -84,6 +85,7 @@ def load_case(case_dir: str | Path) -> CaseSpec:
         name=str(data.get("name", case_dir.name)),
         summary=str(data.get("summary", "")),
         seed=int(data.get("seed", 0)),
+        material=str(data.get("material", "unknown")),
         chart_path=case_dir / chart["file"],
         chart_rows=int(chart["rows"]),
         chart_cols=int(chart["stitches"]),

@@ -310,12 +310,19 @@ class MatchResult:
 
     @property
     def next_row(self) -> int | None:
+        """排名第一的候选的下一行；仅用于单候选场景。
+
+        多候选界面必须按用户当前选中的候选判断，使用
+        :func:`core.progress.candidate_progress`，否则会把“最佳候选已完成”
+        误用于其他候选。
+        """
         if self.best is None:
             return None
         return None if self.chart_complete else self.best.next_row
 
     @property
     def chart_complete(self) -> bool:
+        """排名第一的候选是否到达图解末行；多候选请用候选级判断。"""
         return self.best is not None and self.best.end_row >= self.chart_shape[0] - 1
 
     @property
